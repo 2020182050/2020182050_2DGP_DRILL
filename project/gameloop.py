@@ -6,5 +6,5 @@ import play_state
 
 open_canvas()
 
-game_framework.run(title_state)
+game_framework.run(play_state)
 clear_canvas()

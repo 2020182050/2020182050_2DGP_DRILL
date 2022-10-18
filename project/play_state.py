@@ -8,6 +8,23 @@ class Grass:
     def draw(self):
         self.image.draw(400, 30)
 
+class BgMap1:
+    def __init__(self):
+        self.bg_image = load_image('img/1484.jpg')
+
+    def draw(self):
+        self.bg_image.draw(400, 300,800,600)
+
+class TileMap1:
+    def __init__(self):
+        self.tile_image = load_image('img/42_tilemap.png')
+        self.size = 42
+        self.x = 21
+        self.y = 21
+
+    def draw(self):
+        self.tile_image.clip_draw(self.size*12,self.size*2,self.size,self.size,self.x,self.y)
+
 def handle_events():
     global running
     events = get_events()
@@ -18,22 +35,27 @@ def handle_events():
             if event.key == SDLK_ESCAPE:
                 game_framework.quit()
 
-grass=None
+bgmap1 = None
+tilemap1 = []
 
 def enter():
-    global grass
-    grass = Grass()
+    global tilemap1,bgmap1
+    tilemap1 = [TileMap1() for i in range(20)]
+    bgmap1 = BgMap1()
 
 def exit():
-    global grass
-    del grass
+    global tilemap1,bgmap1
+    del tilemap1,bgmap1
 
 def update():
     pass
 
 def draw():
     clear_canvas()
-    grass.draw()
+    bgmap1.draw()
+    for i,tile in enumerate(tilemap1):
+        tile.x = i*42 + 21
+        tile.draw()
     update_canvas()
 
 def pause():
